@@ -1,5 +1,5 @@
 /* HW2 Scanner
- * Team: Dalton Kajander and Shawn whateveryourlastnameis
+ * Team: Dalton Kajander and Shawn Guydeene
  * 
  * 
  * 
