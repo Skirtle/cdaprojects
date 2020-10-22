@@ -50,8 +50,7 @@ int main(int argc, char* argv[]) {
                 }
                 else {
                     // End of comment, go back in file
-                    fseek(ipf, -2, SEEK_CUR);
-                    c = fgetc(ipf);
+                    fseek(ipf, -1, SEEK_CUR);
                 }
             } 
             if(comment == 1) {
@@ -91,7 +90,7 @@ int main(int argc, char* argv[]) {
                     else temp.token = -1;
                     for (i = 0; i < IDENTIFIER_MAX_LENGTH; i++) word[i] = '\0';
                     letter = 0;
-                    if (c != ' ' && c != '\t' && c != '\n' && c != '\r') fseek(ipf, -1, SEEK_CUR);
+                    if (c != ' ' && c != '\t' && c != '\n') fseek(ipf, -1, SEEK_CUR);
 
                     // Add lexeme to lexeme table
                     table[size] = temp;
@@ -117,7 +116,7 @@ int main(int argc, char* argv[]) {
             letter++;
             // Continually check for whitespace/operator
             while((c = fgetc(ipf)) != EOF) {
-                if (c != ' ' && c != '\t' && c != '\n' && c != '+' && c != '-' && c != '*' && c != '/' && c != '(' && c != ')' && c != '=' && c != ',' && c != '.' && c != '<' && c != '>' && c != ';' && c != ':' && c != '\r') {
+                if (c != ' ' && c != '\t' && c != '\n' && c != '+' && c != '-' && c != '*' && c != '/' && c != '(' && c != ')' && c != '=' && c != ',' && c != '.' && c != '<' && c != '>' && c != ';' && c != ':') {
                     word[letter] = c;
                     letter++;
                 }
@@ -148,7 +147,7 @@ int main(int argc, char* argv[]) {
                     // Add lexeme to lexeme table
                     for (i = 0; i < IDENTIFIER_MAX_LENGTH; i++) word[i] = '\0';
                     letter = 0;
-                    if (c != ' ' && c != '\t' && c != '\n' && c != '\r') fseek(ipf, -1, SEEK_CUR);
+                    if (c != ' ' && c != '\t' && c != '\n') fseek(ipf, -1, SEEK_CUR);
                     table[size] = temp;
                     size++;
                     lexeme* newTable = (lexeme*) realloc(table, size * (sizeof(lexeme) + 12));
@@ -171,7 +170,7 @@ int main(int argc, char* argv[]) {
             letter++;
             // Continue checking until whitespace/operator
             while((c = fgetc(ipf)) != EOF) {
-                if (c != ' ' && c != '\t' && c != '\n' && c != '+' && c != '-' && c != '*' && c != '/' && c != '(' && c != ')' && c != '=' && c != ',' && c != '.' && c != '<' && c != '>' && c != ';' && c != ':' && c != '\r') {
+                if (c != ' ' && c != '\t' && c != '\n' && c != '+' && c != '-' && c != '*' && c != '/' && c != '(' && c != ')' && c != '=' && c != ',' && c != '.' && c != '<' && c != '>' && c != ';' && c != ':') {
                     word[letter] = c;
                     letter++;
                 }
@@ -210,7 +209,7 @@ int main(int argc, char* argv[]) {
                     // Add word to lexeme table
                     for (i = 0; i < IDENTIFIER_MAX_LENGTH; i++) word[i] = '\0';
                     letter = 0;
-                    if (c != ' ' && c != '\t' && c != '\n' && c != '\r') fseek(ipf, -1, SEEK_CUR);
+                    if (c != ' ' && c != '\t' && c != '\n') fseek(ipf, -1, SEEK_CUR);
                     table[size] = temp;
                     size++;
                     lexeme* newTable = (lexeme*) realloc(table, size * (sizeof(lexeme) + 12));
@@ -316,7 +315,6 @@ int main(int argc, char* argv[]) {
     }
 
     // Print table
-    int lexemeList[size];
     printf("\n\nLexeme Table:\nlexeme\t\ttoken type\n");
     for (i = 0; i < size; i++) {
         if (table[i].token < 0) {
@@ -337,22 +335,20 @@ int main(int argc, char* argv[]) {
             }
         }
         else printf("%s\t\t%d\n", table[i].identifier, table[i].token);
-        lexemeList[i] = table[i].token;
     }
 
     // Print list
     printf("\nLexeme List:\n");
     for (i = 0; i < size; i++) {
-      if (lexemeList[i] < 0) {
-        continue;
-      }
-      printf("%d ", lexemeList[i]);
-      if (lexemeList[i] == 2 || lexemeList[i] == 3) {
-        printf("%s ", table[i].identifier);
-      }
+        if (table[i].token < 0) {
+            continue;
+        }
+        printf("%d ", table[i].token);
+        if (table[i].token == 2 || table[i].token == 3) {
+            printf("%s ", table[i].identifier);
+        }
     }
     printf("\n");
-    
     
     // Free allocated memory and close files, return
     fclose(ipf);
