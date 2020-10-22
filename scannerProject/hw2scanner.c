@@ -12,6 +12,7 @@ typedef struct {
 
 int main(int argc, char* argv[]) {
     char* filename = argv[1];
+    filename = "testInput.txt";
     FILE* ipf = fopen(filename, "r");
 
     if (ipf == NULL) {
