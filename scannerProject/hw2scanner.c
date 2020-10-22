@@ -34,16 +34,16 @@ int main(int argc, char* argv[]) {
     
     char c;
     char* word = (char*)calloc(IDENTIFIER_MAX_LENGTH + 1, sizeof(char));
-    int letter = 0;
+    int letter = 0, i;
     while((c = fgetc(ipf)) != EOF) {
-        printf("%c", c);
+        //printf("%c", c);
         if(c != ' ' && c != '\t' && c != '\n') {
             word[letter] = c;
             letter++;
         }
         else {
             printf("%s\n", word);
-            for(int i = 0; i < IDENTIFIER_MAX_LENGTH; i++)
+            for(i = 0; i < IDENTIFIER_MAX_LENGTH; i++)
                 word[i] = '\0';
             letter = 0;
         }
