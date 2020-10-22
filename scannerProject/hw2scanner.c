@@ -31,6 +31,7 @@ int main(int argc, char* argv[]) {
 
     // Reserved words
     char* reservedWords[] = {"const", "var", "procedure", "call", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"}; 
+    char specialSymbols[] = {'+','-','*','/','(',')','=',',','.','<','>',';',':'};
     
     char c;
     char* word = (char*)calloc(IDENTIFIER_MAX_LENGTH + 1, sizeof(char));
