@@ -97,8 +97,6 @@ int main(int argc, char* argv[]) {
                     size++;
                     lexeme* newTable = (lexeme*) realloc(table, size * (sizeof(lexeme) + 12));
                     if (newTable == NULL) {
-                        printf("Size of failure: %d\n", size);
-                        printf("Memory amount: %d\n", size * (sizeof(lexeme) + 12));
                         while(newTable == NULL) {
                             lexeme* newTable = (lexeme*) realloc(table, size * (sizeof(lexeme) + 12));
                         }
@@ -154,8 +152,6 @@ int main(int argc, char* argv[]) {
                     size++;
                     lexeme* newTable = (lexeme*) realloc(table, size * (sizeof(lexeme) + 12));
                     if (newTable == NULL) {
-                        printf("Size of failure: %d\n", size);
-                        printf("Memory amount: %d\n", size * (sizeof(lexeme) + 12));
                         while(newTable == NULL) {
                             lexeme* newTable = (lexeme*) realloc(table, size * (sizeof(lexeme) + 12));
                         }
@@ -218,8 +214,6 @@ int main(int argc, char* argv[]) {
                     size++;
                     lexeme* newTable = (lexeme*) realloc(table, size * (sizeof(lexeme) + 12));
                     if (newTable == NULL) {
-                        printf("Size of failure: %d\n", size);
-                        printf("Memory amount: %d\n", size * (sizeof(lexeme) + 12));
                         while(newTable == NULL) {
                             lexeme* newTable = (lexeme*) realloc(table, size * (sizeof(lexeme) + 12));
                         }
@@ -310,8 +304,6 @@ int main(int argc, char* argv[]) {
         size++;
         lexeme* newTable = (lexeme*) realloc(table, size * (sizeof(lexeme) + 12));
         if (newTable == NULL) {
-            printf("Size of failure: %d\n", size);
-            printf("Memory amount: %d\n", size * (sizeof(lexeme) + 12));
             while(newTable == NULL) {
                 lexeme* newTable = (lexeme*) realloc(table, size * (sizeof(lexeme) + 12));
             }
@@ -325,17 +317,38 @@ int main(int argc, char* argv[]) {
     // Print table
     printf("\n\nLexeme Table:\nlexeme\t\ttoken type\n");
     for (i = 0; i < size; i++) {
-        printf("%s\t\t%d\n", table[i].identifier, table[i].token);
+        if (table[i].token < 0) {
+            int error = table[i].token;
+            switch (error) {
+                case (-1):
+                    printf("%s\t\tError: Invalid symbol\n", table[i].identifier);
+                    break;
+                case (-2):
+                    printf("%s\t\tError: Invalid number\n", table[i].identifier);
+                    break;
+                case (-3):
+                    printf("%s\t\tError: Number too long\n", table[i].identifier);
+                    break;
+                case (-4):
+                    printf("%s\t\tError: Variable name too long\n", table[i].identifier);
+                    break;
+            }
+        }
+        else printf("%s\t\t%d\n", table[i].identifier, table[i].token);
     }
 
     // Print list
     printf("\nLexeme List:\n");
     for (i = 0; i < size; i++) {
+        if (table[i].token < 0) {
+            continue;
+        }
         printf("%d ", table[i].token);
         if (table[i].token == 2 || table[i].token == 3) {
             printf("%s ", table[i].identifier);
         }
     }
+    printf("\n");
     
     // Free allocated memory and close files, return
     fclose(ipf);
