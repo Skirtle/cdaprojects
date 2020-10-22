@@ -36,7 +36,7 @@ int main(int argc, char* argv[]) {
     int letter = 0;
     while((c = fgetc(ipf)) != EOF) {
         printf("%c", c);
-        if(c != ' ' || c != '\t' || c != '\n') {
+        if(c != ' ' && c != '\t' && c != '\n') {
             word[letter] = c;
             letter++;
         }
