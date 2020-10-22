@@ -10,6 +10,11 @@ Goal:
 #define IDENTIFIER_MAX_LENGTH 11
 #define NUMBER_MAX_LENGTH 5
 
+typedef struct {
+    int token;
+    char identifier[];
+} lexeme;
+
 int main(int argc, char* argv[]) {
     // argv[0] - name of this file itself
     // argv[1] - name of file to compile
@@ -25,7 +30,11 @@ int main(int argc, char* argv[]) {
 
     // Reserved words
     char* word[] = {"const", "var", "procedure", "call", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"}; 
+    
+    char c;
+    while((c = fgetc(ipf)) != EOF) {
 
+    }
 
     fclose(ipf);
     return 1;
