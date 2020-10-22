@@ -83,6 +83,9 @@ int main(int argc, char* argv[]) {
         else {
             lexeme temp;
             temp.identifier = (char*)calloc(letter, sizeof(char));
+            
+            for (i = 0; i < letter; i++)
+                temp.identifier[i] = word[i];
 
             if (strcmp(word, "const") == 0)
                 temp.token = 28;
