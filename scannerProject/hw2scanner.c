@@ -43,5 +43,6 @@ int main(int argc, char* argv[]) {
     }
 
     fclose(ipf);
+    free(word);
     return 0;
 }
