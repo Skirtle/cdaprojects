@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
         }
         else {
             if (word[0] != '\0') {
-                printf("1%s\n", word);
+                printf("%s\n", word);
                 for (i = 0; i < IDENTIFIER_MAX_LENGTH; i++)
                     word[i] = '\0';
                 letter = 0;
