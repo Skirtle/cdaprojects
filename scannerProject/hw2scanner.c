@@ -89,7 +89,6 @@ int main(int argc, char* argv[]) {
                 letter = 0;
             }
         }
-
         
     }
 
