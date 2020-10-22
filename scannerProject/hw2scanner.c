@@ -35,6 +35,7 @@ int main(int argc, char* argv[]) {
     
     char c;
     char* word = (char*)calloc(IDENTIFIER_MAX_LENGTH + 1, sizeof(char));
+    lexeme* table = (lexeme*)malloc(sizeof(lexeme) * 1);
     int letter = 0, i, size = 0;
     while((c = fgetc(ipf)) != EOF) {
         //printf("%c", c);
