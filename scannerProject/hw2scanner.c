@@ -32,10 +32,8 @@ int main(int argc, char* argv[]) {
         if (c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')' || c == '=' || c == ',' || c == '.' || c == '<' || c == '>' || c == ';' || c == ':') {
             lexeme temp;
             temp.identifier = (char*)calloc(letter, sizeof(char));
-
             for (i = 0; i < letter; i++)
                 temp.identifier[i] = word[i];
-            
             if (strcmp(word, "const") == 0)
                 temp.token = 28;
             else if (strcmp(word, "var") == 0)
@@ -68,10 +66,6 @@ int main(int argc, char* argv[]) {
                 temp.token = 2;
             }
 
-            table[size-1] = temp;
-            table = (lexeme*)realloc(table, (size + 1) * sizeof(lexeme));
-            size++;
-
             for (i = 0; i < IDENTIFIER_MAX_LENGTH; i++)
                 word[i] = '\0';
             letter = 0;
@@ -81,6 +75,9 @@ int main(int argc, char* argv[]) {
             letter++;
         }
         else {
+            if (word[0] == '\0') {
+                continue;
+            }
             lexeme temp;
             temp.identifier = (char*)calloc(letter, sizeof(char));
 
@@ -116,24 +113,14 @@ int main(int argc, char* argv[]) {
             else if (strcmp(word, "odd") == 0)
                 temp.token = 8;
             
-            table[size-1] = temp;
-            table = (lexeme*)realloc(table, (size + 1) * sizeof(lexeme));
-            size++;
-
-            if (word[0] != '\0') {
-                //printf("%s\n", word);
-                for (i = 0; i < IDENTIFIER_MAX_LENGTH; i++)
-                    word[i] = '\0';
-                letter = 0;
-            }
+            //table = (lexeme*)realloc(table, (size + 1) * sizeof(lexeme));
+            //printf("%s\n", word);
+            for (i = 0; i < IDENTIFIER_MAX_LENGTH; i++)
+                word[i] = '\0';
+            letter = 0;
         }
     }
 
-    printf("%d", size);
-    printf("%s", table[0].identifier);
-    for(i = 0; i < size; i++)
-        printf("%s", table[i].identifier);
-    
     fclose(ipf);
     free(word);
     free(table);
