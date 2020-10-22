@@ -72,7 +72,7 @@ int main(int argc, char* argv[]) {
                 temp.token = 8;
             
             table[size-1] = temp;
-            table = (lexeme*)realloc(table, size+1);
+            table = (lexeme*)realloc(table, (size+1) * sizeof(lexeme));
             size++;
             
             for (i = 0; i < IDENTIFIER_MAX_LENGTH; i++)
@@ -108,7 +108,7 @@ int main(int argc, char* argv[]) {
                 temp.token = 31;
 
             table[size-1] = temp;
-            table = (lexeme*)realloc(table, size+1);
+            table = (lexeme*)realloc(table, (size+1) * sizeof(lexeme));
             size++;
 
             printf("%s\n", word);
@@ -122,6 +122,7 @@ int main(int argc, char* argv[]) {
         }
         else {
             lexeme temp;
+            temp.identifier = (char*) calloc(sizeof(char), IDENTIFIER_MAX_LENGTH + 1);
             strcpy(temp.identifier, word);
             if (strcmp(word, "const") == 0)
                 temp.token = 28;
@@ -153,7 +154,7 @@ int main(int argc, char* argv[]) {
                 temp.token = 8;
             
             table[size-1] = temp;
-            table = (lexeme*)realloc(table, size+1);
+            table = (lexeme*)realloc(table, (size+1) * sizeof(lexeme));
             size++;
             
             if (word[0] != '\0') {
