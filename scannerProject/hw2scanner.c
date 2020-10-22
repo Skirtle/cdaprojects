@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
     }
 
     // Reserved words
-    char* word[] = {"const", "var", "procedure", "call", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"}; 
+    char* reservedWords[] = {"const", "var", "procedure", "call", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"}; 
     
     char c;
     char word[] = (char)calloc(IDENTIFIER_MAX_LENGTH, sizeof(char));
