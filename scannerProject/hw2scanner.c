@@ -38,17 +38,17 @@ int main(int argc, char* argv[]) {
     int letter = 0, i;
     while((c = fgetc(ipf)) != EOF) {
         //printf("%c", c);
-        if(c != ' ' && c != '\t' && c != '\n') {
-            word[letter] = c;
-            letter++;
-        }
-        else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')' || c == '=' || c == ',' || c == '.' || c == '<' || c == '>' || c == ';' || c == ':') {
+        if (c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')' || c == '=' || c == ',' || c == '.' || c == '<' || c == '>' || c == ';' || c == ':') {
             if (word[0] != '\0') {
                 printf("%s\n", word);
                 for (i = 0; i < IDENTIFIER_MAX_LENGTH; i++)
                     word[i] = '\0';
                 letter = 0;
             }
+        }
+        else if (c != ' ' && c != '\t' && c != '\n') {
+            word[letter] = c;
+            letter++;
         }
         else {
             if (word[0] != '\0') {
