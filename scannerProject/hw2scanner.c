@@ -6,6 +6,7 @@ Goal:
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define IDENTIFIER_MAX_LENGTH 11
 #define NUMBER_MAX_LENGTH 5
