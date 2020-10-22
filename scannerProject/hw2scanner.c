@@ -35,6 +35,10 @@ int main(int argc, char* argv[]) {
     char* word = (char*)calloc(IDENTIFIER_MAX_LENGTH, sizeof(char));
     while((c = fgetc(ipf)) != EOF) {
         printf("%c", c);
+        if(c != ' ' || c != '\t' || c != '\n') {
+            word[letter] = c;
+            letter++;
+        }
     }
 
     fclose(ipf);
