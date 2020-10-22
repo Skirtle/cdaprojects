@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    // Reserved words
+    // Reserved words and special symbols
     char* reservedWords[] = {"const", "var", "procedure", "call", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"}; 
     char specialSymbols[] = {'+','-','*','/','(',')','=',',','.','<','>',';',':'};
     
