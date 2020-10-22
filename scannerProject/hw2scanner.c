@@ -19,6 +19,10 @@ int main(int argc, char* argv[]) {
         printf("Filename %s invalid, please try again.", filename);
         return 1;
     }
+    
+    // Reserved words
+    char* reservedword[] = {"const", "var", "procedure", "call", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"};
+    char specialSymbols[] = {'+','-','*','/','(',')','=',',','.','<','>',';',':'};
 
     char c;
     int letter = 0, i, size = 100;
