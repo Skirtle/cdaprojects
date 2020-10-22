@@ -25,7 +25,7 @@ int main(int argc, char* argv[]) {
 
     if (ipf == NULL) {
         printf("Filename %s invalid, please try again.", filename);
-        return 2;
+        return 1;
     }
 
     // Reserved words
@@ -33,6 +33,7 @@ int main(int argc, char* argv[]) {
     
     char c;
     char* word = (char*)calloc(IDENTIFIER_MAX_LENGTH, sizeof(char));
+    int letter = 0;
     while((c = fgetc(ipf)) != EOF) {
         printf("%c", c);
         if(c != ' ' || c != '\t' || c != '\n') {
@@ -42,5 +43,5 @@ int main(int argc, char* argv[]) {
     }
 
     fclose(ipf);
-    return 1;
+    return 0;
 }
