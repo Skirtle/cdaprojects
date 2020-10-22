@@ -40,6 +40,9 @@ int main(int argc, char* argv[]) {
             word[letter] = c;
             letter++;
         }
+        else {
+            printf("%s\n", word);
+        }
     }
 
     fclose(ipf);
