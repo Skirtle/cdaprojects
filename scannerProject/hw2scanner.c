@@ -1,7 +1,7 @@
 /* HW2 Scanner
 Team Dalton Kajander and Shawn Guydeene
 Due-date: 10/22/2020, 11:59
-Goal:
+Goal: scan
 */
 
 #include <stdio.h>
