@@ -23,8 +23,6 @@ int main(int argc, char* argv[]) {
         return 2;
     }
 
-    // Reserved words
-    char* word[] = {"const", "var", "procedure", "call", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"}; 
 
     return 1;
 }
