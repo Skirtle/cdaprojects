@@ -1,3 +1,8 @@
+/*
+Team: Dalton Kajander and Shawn Guydeene
+Assignment: Homework 2, Scanner
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,26 +20,26 @@ int main(int argc, char* argv[]) {
     char* filename = argv[1];
     FILE* ipf = fopen(filename, "r");
 
+    // Check if input file is valid
     if (ipf == NULL) {
         printf("Filename %s invalid, please try again.", filename);
         return 1;
     }
-
-    // Reserved words
-    char* reservedword[] = {"const", "var", "procedure", "call", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"};
-    char specialSymbols[] = {'+','-','*','/','(',')','=',',','.','<','>',';',':'};
 
     char c;
     int letter = 0, i, size = 0, comment = 0;
     char* word = (char*)calloc(IDENTIFIER_MAX_LENGTH, sizeof(char));
     lexeme* table = (lexeme*)calloc(1, sizeof(lexeme) + 12);
 
-
+    // Do everything
     while((c = fgetc(ipf)) != EOF) {
+        // Check for operator
         if (c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')' || c == '=' || c == ',' || c == '.' || c == '<' || c == '>' || c == ';' || c == ':') {
+            // Check if start of comment
             if (c == '/') {
                 if ((c = fgetc(ipf)) == '*') {
                     comment = 1;
+                    // Start checking for end of comment
                     while ((c = fgetc(ipf)) != EOF) {
                         if (c == '*') {
                             if ((c = fgetc(ipf)) == '/') {
@@ -44,6 +49,7 @@ int main(int argc, char* argv[]) {
                     }
                 }
                 else {
+                    // End of comment, go back in file
                     fseek(ipf, -1, SEEK_CUR);
                 }
             } 
@@ -53,16 +59,18 @@ int main(int argc, char* argv[]) {
             }
             word[letter] = c;
             letter++;
+            // Continually check for whitspace/operator
             while((c = fgetc(ipf)) != EOF) {
                 if (c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')' || c == '=' || c == ',' || c == '.' || c == '<' || c == '>' || c == ';' || c == ':') {
                     word[letter] = c;
                     letter++;
                 }
+                // Whitespace/operator found, create word
                 else {
                     lexeme temp;
                     temp.identifier = (char*)calloc(letter, sizeof(char));
                     for (i = 0; i < letter; i++) temp.identifier[i] = word[i];
-                    
+                    // Check for special symbols, submit as own lexeme
                     if (strcmp(word, "+") == 0) temp.token = 4;
                     else if (strcmp(word, "-") == 0) temp.token = 5;
                     else if (strcmp(word, "*") == 0) temp.token = 6;
@@ -84,6 +92,7 @@ int main(int argc, char* argv[]) {
                     letter = 0;
                     if (c != ' ' && c != '\t' && c != '\n') fseek(ipf, -1, SEEK_CUR);
 
+                    // Add lexeme to lexeme table
                     table[size] = temp;
                     size++;
                     lexeme* newTable = (lexeme*) realloc(table, size * (sizeof(lexeme) + 12));
@@ -103,14 +112,17 @@ int main(int argc, char* argv[]) {
                 }
             }
         }
+        // Check for digit
         else if (isdigit(c)) {
             word[letter] = c;
             letter++;
+            // Continually check for whitespace/operator
             while((c = fgetc(ipf)) != EOF) {
                 if (c != ' ' && c != '\t' && c != '\n' && c != '+' && c != '-' && c != '*' && c != '/' && c != '(' && c != ')' && c != '=' && c != ',' && c != '.' && c != '<' && c != '>' && c != ';' && c != ':') {
                     word[letter] = c;
                     letter++;
                 }
+                // Whitespace/operator found
                 else {
                     lexeme temp;
                     temp.identifier = (char*)calloc(letter, sizeof(char));
@@ -123,6 +135,7 @@ int main(int argc, char* argv[]) {
                             break;
                         }
                     }
+                    // Number too big, reset word and sumbit error token
                     if (letter > NUMBER_MAX_LENGTH && temp.token != -2) {
                         temp.token = -3;
                         for (i = 0; i < IDENTIFIER_MAX_LENGTH; i++) word[i] = '\0';
@@ -133,6 +146,7 @@ int main(int argc, char* argv[]) {
                     }
                     //temp.token = 3;
 
+                    // Add lexeme to lexeme table
                     for (i = 0; i < IDENTIFIER_MAX_LENGTH; i++) word[i] = '\0';
                     letter = 0;
                     if (c != ' ' && c != '\t' && c != '\n') fseek(ipf, -1, SEEK_CUR);
@@ -154,19 +168,23 @@ int main(int argc, char* argv[]) {
                 }
             }
         }
+        // Check for letter
         else if (isalpha(c)) {
             word[letter] = c;
             letter++;
+            // Continue checking until whitespace/operator
             while((c = fgetc(ipf)) != EOF) {
                 if (c != ' ' && c != '\t' && c != '\n' && c != '+' && c != '-' && c != '*' && c != '/' && c != '(' && c != ')' && c != '=' && c != ',' && c != '.' && c != '<' && c != '>' && c != ';' && c != ':') {
                     word[letter] = c;
                     letter++;
                 }
+                // Found whitespace/operator, word finished, check validity
                 else {
                     lexeme temp;
                     temp.identifier = (char*)calloc(letter, sizeof(char));
                     for (i = 0; i < letter; i++) temp.identifier[i] = word[i];
-
+                    // Man, I wish switch statements worked
+                    // Check if reserved word
                     if (strcmp(word, "const") == 0) temp.token = 28;
                     else if (strcmp(word, "var") == 0) temp.token = 29;
                     else if (strcmp(word, "procedure") == 0) temp.token = 30;
@@ -182,14 +200,17 @@ int main(int argc, char* argv[]) {
                     else if (strcmp(word, "write") == 0) temp.token = 31;
                     else if (strcmp(word, "odd") == 0) temp.token = 8;
                     else {
+                        // Error, word too long
                         if (letter > IDENTIFIER_MAX_LENGTH) {
                             temp.token = -4;
                         }
+                        // Not error, word just right
                         else {
                             temp.token = 2;
                         }
                     }
 
+                    // Add word to lexeme table
                     for (i = 0; i < IDENTIFIER_MAX_LENGTH; i++) word[i] = '\0';
                     letter = 0;
                     if (c != ' ' && c != '\t' && c != '\n') fseek(ipf, -1, SEEK_CUR);
@@ -211,24 +232,15 @@ int main(int argc, char* argv[]) {
                 }
             }
         }
-        else if (c == '/') {
-            if (c = fgetc(ipf) == '*') {
-                while (c = fgetc(ipf) != EOF) {
-                    if (c == '*') {
-                        if (c = fgetc(ipf) == '/') {
-                            break;
-                        }
-                    }
-                }
-            }
-        }
     
     }
     
+    // Prints source code
     printf("Source Program:\n");
     rewind(ipf);
     while((c = fgetc(ipf)) != EOF) printf("%c", c);
     
+    // Get final characters in case theres anything left over
     if (word[0] != '\0') {
         lexeme temp;
         temp.identifier = (char*)calloc(letter, sizeof(char));
@@ -310,11 +322,13 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    // Print table
     printf("\n\nLexeme Table:\nlexeme\t\ttoken type\n");
     for (i = 0; i < size; i++) {
         printf("%s\t\t%d\n", table[i].identifier, table[i].token);
     }
 
+    // Print list
     printf("\nLexeme List:\n");
     for (i = 0; i < size; i++) {
         printf("%d ", table[i].token);
@@ -323,11 +337,12 @@ int main(int argc, char* argv[]) {
         }
     }
     
-
+    // Free allocated memory and close files, return
     fclose(ipf);
+    for (i = 0; i < size; i++) {
+        free(table[i].identifier);
+    }
     free(word);
     free(table);
     return 0;
 }
-
-//table = (lexeme*)realloc(table, (size + 1) * sizeof(lexeme));
