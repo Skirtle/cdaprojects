@@ -42,6 +42,14 @@ int main(int argc, char* argv[]) {
             word[letter] = c;
             letter++;
         }
+        else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')' || c == '=' || c == ',' || c == '.' || c == '<' || c == '>' || c == ';' || c == ':') {
+            if (word[0] != '\0') {
+                printf("%s\n", word);
+                for (i = 0; i < IDENTIFIER_MAX_LENGTH; i++)
+                    word[i] = '\0';
+                letter = 0;
+            }
+        }
         else {
             if (word[0] != '\0') {
                 printf("%s\n", word);
