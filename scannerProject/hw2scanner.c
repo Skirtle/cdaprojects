@@ -12,14 +12,13 @@ typedef struct {
 
 int main(int argc, char* argv[]) {
     char* filename = argv[1];
-    filename = "testInput.txt";
     FILE* ipf = fopen(filename, "r");
 
     if (ipf == NULL) {
         printf("Filename %s invalid, please try again.", filename);
         return 1;
     }
-    
+
     // Reserved words
     char* reservedword[] = {"const", "var", "procedure", "call", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"};
     char specialSymbols[] = {'+','-','*','/','(',')','=',',','.','<','>',';',':'};
@@ -29,13 +28,14 @@ int main(int argc, char* argv[]) {
     char* word = (char*)calloc(IDENTIFIER_MAX_LENGTH, sizeof(char));
     lexeme* table = (lexeme*)malloc(sizeof(lexeme) * size);
     while((c = fgetc(ipf)) != EOF) {
-        printf("%c", c);
+        //printf("%c", c);
         if (c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')' || c == '=' || c == ',' || c == '.' || c == '<' || c == '>' || c == ';' || c == ':') {
             lexeme temp;
             temp.identifier = (char*)calloc(letter, sizeof(char));
 
             for (i = 0; i < letter; i++)
                 temp.identifier[i] = word[i];
+            
             if (strcmp(word, "const") == 0)
                 temp.token = 28;
             else if (strcmp(word, "var") == 0)
@@ -83,7 +83,7 @@ int main(int argc, char* argv[]) {
         else {
             lexeme temp;
             temp.identifier = (char*)calloc(letter, sizeof(char));
-            
+
             for (i = 0; i < letter; i++)
                 temp.identifier[i] = word[i];
 
@@ -129,6 +129,11 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    printf("%d", size);
+    printf("%s", table[0].identifier);
+    for(i = 0; i < size; i++)
+        printf("%s", table[i].identifier);
+    
     fclose(ipf);
     free(word);
     free(table);
