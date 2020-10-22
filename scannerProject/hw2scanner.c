@@ -7,10 +7,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 int main(int argc, char* argv[]) {
     // argv[0] - name of this file itself
     // argv[1] - name of file to compile
+
+
+    char* filename = argv[1];
+    FILE* ipf = fopen(filename, "r");
+
+    if (ipf == NULL) {
+        printf("Filename %s invalid, please try again.", filename);
+        return 0;
+    }
 
     return 1;
 }
