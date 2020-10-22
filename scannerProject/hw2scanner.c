@@ -21,6 +21,7 @@ int main(int argc, char* argv[]) {
     // argv[1] - name of file to compile
 
     char* filename = argv[1];
+    filename = "testInput.txt";
     FILE* ipf = fopen(filename, "r");
 
     if (ipf == NULL) {
@@ -29,8 +30,8 @@ int main(int argc, char* argv[]) {
     }
 
     // Reserved words
-    //char* word[] = {"const", "var", "procedure", "call", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"};
-    //char specialSymbols[] = {'+','-','*','/','(',')','=',',','.','<','>',';',':'};
+    char* reservedWords[] = {"const", "var", "procedure", "call", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"};
+    char specialSymbols[] = {'+','-','*','/','(',')','=',',','.','<','>',';',':'};
 
     char c;
     char* word = (char*)calloc(IDENTIFIER_MAX_LENGTH, sizeof(char));
