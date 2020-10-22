@@ -29,8 +29,8 @@ int main(int argc, char* argv[]) {
     }
 
     // Reserved words
-    //char* word[] = {"const", "var", "procedure", "call", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"};
-    //char specialSymbols[] = {'+','-','*','/','(',')','=',',','.','<','>',';',':'};
+    char* word[] = {"const", "var", "procedure", "call", "begin", "end", "if", "then", "else", "while", "do", "read", "write", "odd"};
+    char specialSymbols[] = {'+','-','*','/','(',')','=',',','.','<','>',';',':'};
 
     char c;
     char* word = (char*)calloc(IDENTIFIER_MAX_LENGTH, sizeof(char));
@@ -89,6 +89,8 @@ int main(int argc, char* argv[]) {
                 letter = 0;
             }
         }
+
+        
     }
 
     fclose(ipf);
