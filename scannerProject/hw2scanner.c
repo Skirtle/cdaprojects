@@ -35,7 +35,7 @@ int main(int argc, char* argv[]) {
     
     char c;
     char* word = (char*)calloc(IDENTIFIER_MAX_LENGTH + 1, sizeof(char));
-    int letter = 0, i;
+    int letter = 0, i, size = 0;
     while((c = fgetc(ipf)) != EOF) {
         //printf("%c", c);
         if (c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')' || c == '=' || c == ',' || c == '.' || c == '<' || c == '>' || c == ';' || c == ':') {
