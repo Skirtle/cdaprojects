@@ -43,6 +43,9 @@ int main(int argc, char* argv[]) {
         }
         else {
             printf("%s\n", word);
+            for(int i = 0; i < IDENTIFIER_MAX_LENGTH; i++)
+                word[i] = '\0';
+            letter = 0;
         }
     }
 
