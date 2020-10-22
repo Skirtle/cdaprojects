@@ -17,8 +17,8 @@ int main(int argc, char* argv[]) {
 
     if (ipf == NULL) {
         printf("Filename %s invalid, please try again.", filename);
-        return 2;
+        return 1;
     }
 
-    return 1;
+    return 0;
 }
