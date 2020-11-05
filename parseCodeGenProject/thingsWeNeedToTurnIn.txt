@@ -1,0 +1,6 @@
+1. Source code of the tiny- PL/0 compiler
+2. Text file with instructions on how to use, called readme.txt
+3. Text file composed of input file and output of Parser/codegen to demonstrate the program is syntatically correct
+4. Text file composed of input file and output of Parser/codegen to demonstrate all possible errors
+
+All files must be put into a zip file
