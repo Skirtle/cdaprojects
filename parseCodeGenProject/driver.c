@@ -14,7 +14,6 @@ COP3402-20Fall 0001
 
 
 int main(int argc, char *argv[]) {
-    printf("here");
     if (argc < 2) {
         printf("Error: No file to compile");
         return 1;
@@ -34,7 +33,7 @@ int main(int argc, char *argv[]) {
         else
             lFlag = 1;
 
-        if (argc = 4) {
+        if (argc == 4) {
             if (argv[3][1] = 'v')
                 vFlag = 1;
             else if (argv[3][1] == 'a')
@@ -43,7 +42,6 @@ int main(int argc, char *argv[]) {
                 lFlag = 1;
         }
     }
-
     FILE *ipf = fopen(argv[1], "r");
 
     // Grabbing the input file and storing it inside a char array.
