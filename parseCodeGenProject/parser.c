@@ -5,16 +5,16 @@
 #include "scanner.h"
 
 symbol *table;
-int index = 0;
+int table_index = 0;
 
 void const_dec(lexeme *list, int *no_errors, int *table_size) {
-    if (list[index].type == 28) {
+    if (list[table_index].type == 28) {
         do {
             // get next token
-            index++;
+            table_index++;
 
             // check if token is identifier token
-            if (list[index].type != 2) {
+            if (list[table_index].type != 2) {
                 printf("Error number 4: const, var, procedure must be followed by identifier");
                 *no_errors = 0;
                 return;
@@ -23,7 +23,7 @@ void const_dec(lexeme *list, int *no_errors, int *table_size) {
             // save indentifier name
             symbol temp;
             int i;
-            for (i = 0; i < 13; i++) temp.name[i] = list[index].name[i];
+            for (i = 0; i < 13; i++) temp.name[i] = list[table_index].name[i];
 
             // check if indentier is already in symbol table
             for (i = 0; i < *table_size; i++) {
@@ -35,20 +35,20 @@ void const_dec(lexeme *list, int *no_errors, int *table_size) {
             }
 
             // get next token
-            index++;
+            table_index++;
 
             // check if token is not =
-            if (list[index].type != 9) {
+            if (list[table_index].type != 9) {
                 printf("Error number 3: indentifier must be followed by '='");
                 *no_errors = 0;
                 return;
             }
 
             // get next token
-            index++;
+            table_index++;
 
             // check if token is not a number
-            if (list[index].type != 3) {
+            if (list[table_index].type != 3) {
                 printf("Error number 2: = must be followed by a number");
                 *no_errors = 0;
                 return;
@@ -56,7 +56,7 @@ void const_dec(lexeme *list, int *no_errors, int *table_size) {
 
             // Adding to the symbol table.
             temp.kind = 1;
-            temp.val = list[index].value;
+            temp.val = list[table_index].value;
             temp.level = 0;
             temp.addr = 0;
             temp.mark = 0;
@@ -65,32 +65,32 @@ void const_dec(lexeme *list, int *no_errors, int *table_size) {
             (*table_size)++;
 
             // Get next token
-            index++;
-        } while(list[index].type == 17);
+            table_index++;
+        } while(list[table_index].type == 17);
 
         // make sure next token is ;
-        if (list[index].type != 18); {
+        if (list[table_index].type != 18); {
             printf("Error number 5: Semicolon or comma missing");
             *no_errors = 0;
             return;
         }
 
         // get next Token
-        index++;
+        table_index++;
     }
 }
 
 void var_dec(lexeme *list, int *no_errors, int *table_size) {
-    if (list[index].type == 29) {
+    if (list[table_index].type == 29) {
         int num_vars = 0;
         do {
             num_vars++;
 
             // get next token
-            index++;
+            table_index++;
 
             // check if token is identifier
-            if (list[index].type != 2) {
+            if (list[table_index].type != 2) {
                 printf("Error number 4: const, var, procedure must be followed by identifier");
                 *no_errors = 0;
                 return;
@@ -99,7 +99,7 @@ void var_dec(lexeme *list, int *no_errors, int *table_size) {
             // save indentifier name
             symbol temp;
             int i;
-            for (i = 0; i < 13; i++) temp.name[i] = list[index].name[i];
+            for (i = 0; i < 13; i++) temp.name[i] = list[table_index].name[i];
 
             // check if indentier is already in symbol table
             for (i = 0; i < *table_size; i++) {
@@ -121,18 +121,18 @@ void var_dec(lexeme *list, int *no_errors, int *table_size) {
             (*table_size)++;
 
             // get next token
-            index++;
-        } while(list[index].type == 17);
+            table_index++;
+        } while(list[table_index].type == 17);
 
         // make sure next token is semicolon
-        if (list[index].type != 18); {
+        if (list[table_index].type != 18); {
             printf("Error number 5: Semicolon or comma missing");
             *no_errors = 0;
             return;
         }
 
         // get next token
-        index++;
+        table_index++;
     }
 }
 
