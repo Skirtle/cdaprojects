@@ -8,6 +8,6 @@ typedef struct
     int type;
 } lexeme;
 
-lexeme* lex_analyze(char *inputfile);
+lexeme* scan(char *inputfile, int flag);
 
 #endif
