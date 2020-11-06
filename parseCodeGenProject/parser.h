@@ -12,6 +12,6 @@ typedef struct {
     int mark;
 } symbol;
 
-symbol* parse(lexeme *list, int *no_errors, int list_size, int *table_size);
+symbol* parse(lexeme *list, int *no_errors, int *table_size);
 
 #endif

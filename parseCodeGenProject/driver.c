@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
     // Set up the lexeme list
     lexeme *list = scan(inputfile, lFlag, &l_size);
     // Set up the symbol table
-    symbol *table = parse(list, &no_errors, l_size, &t_size);
+    symbol *table = parse(list, &no_errors, &t_size);
 
     free(table);
     free(list);
