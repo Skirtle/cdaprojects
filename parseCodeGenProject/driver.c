@@ -56,11 +56,15 @@ int main(int argc, char *argv[]) {
     }
     inputfile[i] == '\0';
 
+    int no_errors = 1, l_size = 0, t_size;
     // Printing the source program.
     printf("\nSource Program:\n%s\n", inputfile);
     // Set up the lexeme list
-    lexeme *list = scan(inputfile, lFlag);
+    lexeme *list = scan(inputfile, lFlag, &l_size);
+    // Set up the symbol table
+    symbol *table = parse(list, &no_errors, l_size, &t_size);
 
+    free(table);
     free(list);
     free(inputfile);
     return 0;
