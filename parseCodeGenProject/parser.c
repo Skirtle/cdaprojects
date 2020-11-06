@@ -7,23 +7,6 @@
 symbol *table;
 int index = 0;
 
-symbol* parse(lexeme *list, int *no_errors, int *table_size) {
-    table = (symbol*) calloc(1, sizeof(symbol) + 12);
-
-    block(list, no_errors, table_size);
-
-
-    return table;
-}
-
-void block(lexeme *list, int *no_errors, int *table_size) {
-    const_dec(list, no_errors, table_size);
-    if (*no_errors == 0) return;
-    var_dec(list, no_errors, table_size);
-    if (*no_errors == 0) return;
-    statement(list, no_errors, table_size);
-}
-
 void const_dec(lexeme *list, int *no_errors, int *table_size) {
     if (list[index].type == 28) {
         do {
@@ -156,6 +139,25 @@ void var_dec(lexeme *list, int *no_errors, int *table_size) {
 void statement(lexeme *list, int *no_errors, int *table_size) {
 
 }
+
+void block(lexeme *list, int *no_errors, int *table_size) {
+    const_dec(list, no_errors, table_size);
+    if (*no_errors == 0) return;
+    var_dec(list, no_errors, table_size);
+    if (*no_errors == 0) return;
+    statement(list, no_errors, table_size);
+}
+
+symbol* parse(lexeme *list, int *no_errors, int *table_size) {
+    table = (symbol*) calloc(1, sizeof(symbol) + 12);
+
+    block(list, no_errors, table_size);
+
+
+    return table;
+}
+
+
 
 void condition(lexeme *list, int *no_errors, int *table_size) {
 
