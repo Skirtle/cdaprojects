@@ -7,7 +7,7 @@
 #define IDENTIFIER_MAX_LENGTH 11
 #define NUMBER_MAX_LENGTH 5
 
-lexeme* scan(char *inputfile, int flag) {
+lexeme* scan(char *inputfile, int flag, int *list_size) {
     // Variable declaration
     char c, *word = (char*) calloc(IDENTIFIER_MAX_LENGTH, sizeof(char));
     int letter = 0, i, size = 0, comment = 0, index = 0;
@@ -262,6 +262,8 @@ lexeme* scan(char *inputfile, int flag) {
         }
         out = new_list;
     }
+
+    *list_size = size;
 
     if (flag) {
         // Print list
