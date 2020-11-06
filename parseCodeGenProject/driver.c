@@ -13,7 +13,8 @@ COP3402-20Fall 0001
 #include "vm.h"
 
 
-int main(int argc, char **argv) {
+int main(int argc, char *argv[]) {
+    printf("here");
     if (argc < 2) {
         printf("Error: No file to compile");
         return 1;
@@ -36,17 +37,17 @@ int main(int argc, char **argv) {
         if (argc = 4) {
             if (argv[3][1] = 'v')
                 vFlag = 1;
-            else if (argv[2][1] == 'a')
+            else if (argv[3][1] == 'a')
                 aFlag = 1;
             else
                 lFlag = 1;
         }
     }
-    
+
     FILE *ipf = fopen(argv[1], "r");
 
     // Grabbing the input file and storing it inside a char array.
-    char *inputfile = malloc(500 * sizeof(char));
+    char *inputfile = (char*) malloc(500 * sizeof(char));
     char c = fgetc(ipf);
     int i = 0;
     while(1) {
@@ -62,5 +63,7 @@ int main(int argc, char **argv) {
     // Set up the lexeme list
     lexeme *list = scan(inputfile, lFlag);
 
+    free(list);
+    free(inputfile);
     return 0;
 }
