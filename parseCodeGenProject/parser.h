@@ -5,13 +5,13 @@
 
 typedef struct {
     int kind;
-    char* name;
+    char *name;
     int val;
     int level;
     int addr;
     int mark;
 } symbol;
 
-symbol* parse(lexeme *list, int *no_errors);
+symbol* parse(lexeme *list, int *no_errors, int list_size, int *table_size);
 
 #endif
