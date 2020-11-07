@@ -141,7 +141,17 @@ void factor(lexeme *list, int *no_errors, int *table_size) {
 }
 
 void term(lexeme *list, int *no_errors, int *table_size) {
+    // factor
+    factor(list, no_errors, table_size);
 
+    // while token mult or slash
+    while (list[list_index].type == 6 || list[list_index].type == 7) {
+        // get next token
+        list_index++;
+
+        // factor
+        factor(list, no_errors, table_size);
+    }
 }
 
 void expression(lexeme *list, int *no_errors, int *table_size) {
