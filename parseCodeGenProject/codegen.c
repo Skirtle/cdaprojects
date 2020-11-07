@@ -4,6 +4,9 @@
 #include "parser.h"
 #include "codegen.h"
 
+int lindex = 0; //list index
+int tindex = 0; // table index
+
 instruction *set;
 void block_gen(symbol *table, lexeme *list, int *set_size);
 void statement_gen(symbol *table, lexeme *list, int *set_size);
@@ -14,7 +17,8 @@ void factor_gen(symbol *table, lexeme *list, int *set_size, int reg);
 
 // debug functions
 void print_set(int *set_size) {
-    for (int i = 0; i < (*set_size); i++) {
+    int i;
+    for (i = 0; i < (*set_size); i++) {
         printf("%d %d %d %d\n", set[i].opcode, set[i].r, set[i].l, set[i].m);
     }
 }
@@ -74,6 +78,45 @@ instruction* generate_code(symbol *table, lexeme *list, int *set_size, int flag)
 }
 
 void block_gen(symbol *table, lexeme *list, int *set_size) {
+    int numVars = 0;
+    // do stuff for consts
+    if (list[lindex].type == 28) {
+        do {
+            lindex += 4;
+        } while(list[lindex].type == 17);
+        lindex++;
+    }
+    // do stuff for var
+    if (list[lindex].type == 29) {
+        do {
+            numVars++;
+            lindex += 2;
+        } while(list[lindex].type == 17);
+        lindex++;
+    }
+
+    // emit
+    // Program begins with a JMP for main
+    instruction temp;
+    temp.opcode = 6;
+    temp.r = 0;
+    temp.l = 0;
+    temp.m = 3 + numVars;
+
+    // Adding JMP to the instruction set
+    set[*set_size] = temp;
+    (*set_size)++;
+
+    // EXPAND the instruction set
+    instruction *new_set = (instruction*) realloc(set, ((*set_size) + 1) * sizeof(instruction));
+    if (new_set == NULL) {
+        // realloc failed, try again
+        while (new_set == NULL) {
+            new_set = (instruction*) realloc(set, ((*set_size) + 1) * sizeof(instruction));
+        }
+    }
+    set = new_set;
+
 
 }
 
