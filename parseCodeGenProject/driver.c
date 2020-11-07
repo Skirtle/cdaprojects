@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
         return 2;
     }
     // Generating the instruction set
-    instruction *set = generate_code(table, list, &i_size, aFlag);
+    instruction *set = generate_code(table, list, &i_size, aFlag, t_size);
 
 
     free(table);
