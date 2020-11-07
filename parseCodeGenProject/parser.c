@@ -145,6 +145,22 @@ void term(lexeme *list, int *no_errors, int *table_size) {
 }
 
 void expression(lexeme *list, int *no_errors, int *table_size) {
+    // check if token add or sub
+    if (list[list_index].type == 4 || list[list_index].type == 5) {
+        // get next token
+        list_index++;
+    }
+    // term
+    term(list, no_errors, table_size);
+
+    // check while token is + or -
+    while (list[list_index].type == 4 || list[list_index].type == 5) {
+        // get next token
+        list_index++;
+
+        // term
+        term(list, no_errors, table_size);
+    }
 
 }
 
