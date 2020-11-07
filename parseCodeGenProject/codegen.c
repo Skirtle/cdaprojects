@@ -57,7 +57,7 @@ instruction* generate_code(symbol *table, lexeme *list, int *set_size, int flag)
     halt.l = 0;
     halt.m = 3;
 
-    // Adding JMP to the instruction set
+    // Adding halt to the instruction set
     set[*set_size] = halt;
     (*set_size)++;
             
@@ -96,14 +96,13 @@ void block_gen(symbol *table, lexeme *list, int *set_size) {
     }
 
     // emit
-    // Program begins with a JMP for main
     instruction temp;
     temp.opcode = 6;
     temp.r = 0;
     temp.l = 0;
     temp.m = 3 + numVars;
 
-    // Adding JMP to the instruction set
+    // Adding temp to the instruction set
     set[*set_size] = temp;
     (*set_size)++;
 
@@ -116,12 +115,12 @@ void block_gen(symbol *table, lexeme *list, int *set_size) {
         }
     }
     set = new_set;
-
+    statement_gen(table, list, set_size);
 
 }
 
 void statement_gen(symbol *table, lexeme *list, int *set_size) {
-
+    
 }
 
 void condition_gen(symbol *table, lexeme *list, int *set_size) {
