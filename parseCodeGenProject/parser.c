@@ -137,7 +137,54 @@ void var_dec(lexeme *list, int *no_errors, int *table_size) {
 }
 
 void factor(lexeme *list, int *no_errors, int *table_size) {
+    // check if token is ident
+    if (list[list_index].type == 2) {
+        // check if indent even in symbol table
+        int i, notInTable = 1;
+        for (i = 0; i < *table_size; i++) {
+            if (strcmp(table[i].name, list[list_index].name) == 0) {
+                notInTable = 0;
+                break;
+            }
+        }
+        if (notInTable) {
+            printf("Error number 11: undeclared indentifier");
+            *no_errors = 0;
+            return;
+        }
 
+        list_index++;
+    }
+
+    // check if token is number
+    else if (list[list_index].type == 3) {
+        // get next token
+        list_index++;
+    }
+
+    // check if left parenthesis
+    else if (list[list_index].type == 15) {
+        // get next token
+        list_index++;
+
+        // expression
+        expression(list, no_errors, table_size);
+
+        // check if right parenthesis
+        if (list[list_index].type != 16) {
+            printf("Error number 22: right parenthesis missing");
+            *no_errors = 0;
+            return;
+        }
+
+        // get next token
+        list_index++;
+    }
+    else {
+        printf("Error number 24: an expression cannot begin with this symbol");
+        *no_errors = 0;
+        return;
+    }
 }
 
 void term(lexeme *list, int *no_errors, int *table_size) {
@@ -411,6 +458,7 @@ void statement(lexeme *list, int *no_errors, int *table_size) {
         // return
         return;
     }
+    
     // return
     return;
 }
