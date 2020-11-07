@@ -149,7 +149,34 @@ void expression(lexeme *list, int *no_errors, int *table_size) {
 }
 
 void condition(lexeme *list, int *no_errors, int *table_size) {
+    // check if odd
+    if (list[list_index].type == 8) {
+        // get next token
+        list_index++;
 
+        // expression
+        expression(list, no_errors, table_size);
+    }
+    // otherwise
+    else {
+        // expression
+        expression(list, no_errors, table_size);
+
+        // check if token is relational operator
+        if (list[list_index].type != 9 && list[list_index].type == 10 && list[list_index].type != 11 && list[list_index].type != 12
+                && list[list_index].type != 13  && list[list_index].type != 14) {
+            printf("Error number 20: relational operator edpected");
+            *no_errors = 0;
+            return;
+        }
+
+        // get next token
+        list_index++;
+
+        // expression
+        expression(list, no_errors, table_size);
+
+    }
 }
 
 void statement(lexeme *list, int *no_errors, int *table_size) {
