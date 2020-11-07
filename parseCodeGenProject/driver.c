@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
             lFlag = 1;
 
         if (argc == 4) {
-            if (argv[3][1] = 'v')
+            if (argv[3][1] == 'v')
                 vFlag = 1;
             else if (argv[3][1] == 'a')
                 aFlag = 1;
@@ -56,13 +56,24 @@ int main(int argc, char *argv[]) {
     }
     inputfile[i] == '\0';
 
-    int no_errors = 1, l_size = 0, t_size;
+    int no_errors = 1, l_size = 0, t_size = 0, i_size = 0;
     // Printing the source program.
     printf("\nSource Program:\n%s\n", inputfile);
     // Set up the lexeme list
     lexeme *list = scan(inputfile, lFlag, &l_size);
     // Set up the symbol table
     symbol *table = parse(list, &no_errors, &t_size);
+    if(no_errors)
+        printf("\nNo errors, program is syntactically correct.\n");
+    else {
+        free(table);
+        free(list);
+        free(inputfile);
+        return 2;
+    }
+    // Generating the instruction set
+    instruction *set = generate_code(table, list, &i_size, aFlag);
+
 
     free(table);
     free(list);

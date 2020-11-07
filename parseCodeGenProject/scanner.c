@@ -9,7 +9,7 @@
 
 lexeme* scan(char *inputfile, int flag, int *list_size) {
     // Variable declaration
-    char c, *word = (char*) calloc(IDENTIFIER_MAX_LENGTH, sizeof(char));
+    char c, *word = (char*) calloc(IDENTIFIER_MAX_LENGTH + 2, sizeof(char));
     int letter = 0, i, size = 0, comment = 0, index = 0;
     lexeme *out = (lexeme*) calloc(1, sizeof(lexeme) + 12);
 

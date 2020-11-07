@@ -7,10 +7,11 @@
 typedef struct
 {
     int opcode;
-    char *op;
+    int r;
     int l;
     int m;
 } instruction;
 
+instruction* generate_code(symbol *table, lexeme *list, int *set_size, int flag);
 
 #endif
