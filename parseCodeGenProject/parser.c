@@ -6,6 +6,16 @@
 
 symbol *table;
 int list_index = 0;
+// prototypes
+void const_dec(lexeme *list, int *no_errors, int *table_size);
+void var_dec(lexeme *list, int *no_errors, int *table_size);
+void expression(lexeme *list, int *no_errors, int *table_size);
+void factor(lexeme *list, int *no_errors, int *table_size);
+void term(lexeme *list, int *no_errors, int *table_size);
+void condition(lexeme *list, int *no_errors, int *table_size);
+void statement(lexeme *list, int *no_errors, int *table_size);
+void block(lexeme *list, int *no_errors, int *table_size);
+symbol* parse(lexeme *list, int *no_errors, int *table_size);
 
 void const_dec(lexeme *list, int *no_errors, int *table_size) {
     if (list[list_index].type == 28) {
@@ -136,6 +146,26 @@ void var_dec(lexeme *list, int *no_errors, int *table_size) {
     }
 }
 
+void expression(lexeme *list, int *no_errors, int *table_size) {
+    // check if token add or sub
+    if (list[list_index].type == 4 || list[list_index].type == 5) {
+        // get next token
+        list_index++;
+    }
+    // term
+    term(list, no_errors, table_size);
+
+    // check while token is + or -
+    while (list[list_index].type == 4 || list[list_index].type == 5) {
+        // get next token
+        list_index++;
+
+        // term
+        term(list, no_errors, table_size);
+    }
+
+}
+
 void factor(lexeme *list, int *no_errors, int *table_size) {
     // check if token is ident
     if (list[list_index].type == 2) {
@@ -199,26 +229,6 @@ void term(lexeme *list, int *no_errors, int *table_size) {
         // factor
         factor(list, no_errors, table_size);
     }
-}
-
-void expression(lexeme *list, int *no_errors, int *table_size) {
-    // check if token add or sub
-    if (list[list_index].type == 4 || list[list_index].type == 5) {
-        // get next token
-        list_index++;
-    }
-    // term
-    term(list, no_errors, table_size);
-
-    // check while token is + or -
-    while (list[list_index].type == 4 || list[list_index].type == 5) {
-        // get next token
-        list_index++;
-
-        // term
-        term(list, no_errors, table_size);
-    }
-
 }
 
 void condition(lexeme *list, int *no_errors, int *table_size) {
